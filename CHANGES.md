@@ -1,3 +1,3 @@
-## 0.0.1 -- UNRELEASED
+## 0.1.0 -- UNRELEASED
 
 Initial release.
