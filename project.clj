@@ -15,9 +15,17 @@
                  [io.aviso/pretty "0.1.18"]
                  [org.slf4j/jcl-over-slf4j "1.7.12"]]
 
+  :profiles
+  {:dev
+   {:dependencies
+    [[speclj "3.3.1" :exclusions [org.clojure/clojure]]]}}
+
   :java-source-paths ["java-src"]
 
-  :plugins [[lein-shell "0.4.0"]]
+  :plugins [[speclj "3.3.1"]
+            [lein-shell "0.4.0"]]
+
+  :test-paths ["spec"]
 
   :shell {:commands {"scp" {:dir "doc"}}}
   :aliases {"deploy-doc" ["shell"
