@@ -49,7 +49,7 @@ On each request, the request correlation id is extracted, or generated if not pr
 By default, the correlation id comes from the Correlation-Id header, and is generated
 as a random UUID if not present.
 
-In addition, the io.aviso.logging.correlation/*correlation-id* Var is bound to the correlation id.
+In addition, the io.aviso.logging.correlation/\*correlation-id* Var is bound to the correlation id.
 This little bit of semi-global state can be used when making requests to other servers,
 to include the correlation id in the request.
 
