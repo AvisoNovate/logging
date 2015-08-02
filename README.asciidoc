@@ -1,0 +1,86 @@
+## Logging - SLF4J plus request correlation
+
+image:http://clojars.org/io.aviso/logging/latest-version.svg[Clojars Project, link="http://clojars.org/io.aviso/logging"]
+
+image:https://drone.io/github.com/AvisoNovate/logging/status.png[Build Status, link="https://drone.io/github.com/AvisoNovate/logging"]
+
+Logging is available under the terms of the Apache Software License 2.0.
+
+link:http://howardlewisship.com/io.aviso/logging/[API Documentation]
+
+## Dependencies
+
+Mostly, we set up the dependencies so that 
+link:https://github.com/clojure/tools.logging[clojure.tools.logging], 
+uses link:http://www.slf4j.org/[SLF4J] and 
+link:http://logback.qos.ch/[Logback].
+
+We also include the link:http://www.slf4j.org/legacy.html#jclOverSLF4J[shim library] 
+that converts 
+link:http://commons.apache.org/proper/commons-logging/[Apache Commons Logging] to use SLF4J as well.
+
+## Setup
+
+The namespace io.aviso.logging.setup performs all the necessary setup; it installs
+link:https://github.com/AvisoNovate/pretty[pretty exception reporting] for console output
+and commons logging output, as well as a default uncaught exception handler (that logs the 
+uncaught exception).
+ 
+Simply have some part of your application require this namespace. 
+
+## Request Correlation
+ 
+Ever try to trace a request from a client through a cluster of services?
+Even if you can get all the logs in one place, how do you pick out the single thread of
+requests and responses from all the other requests and responses?
+
+With request correlation, each request gets assigned a correlation id on entry to the system.
+When one server sends a request to another server, it includes the correlation id as a header
+on the request.
+
+That, plus a little bit of logic in your Logback configuration, allows every request to be flagged.
+
+### Request Correlation Middleware
+
+The function io.aviso.logging.correlation/wrap-with-request-correlation is a Ring middleware function;
+it is passed a Ring request handler and wraps it.
+
+On each request, the request correlation id is extracted, or generated if not present.
+By default, the correlation id comes from the Correlation-Id header, and is generated
+as a random UUID if not present.
+
+In addition, the io.aviso.logging.correlation/*correlation-id* Var is bound to the correlation id.
+This little bit of semi-global state can be used when making requests to other servers,
+to include the correlation id in the request.
+
+### Logging the Correlation Id
+
+The final piece of the puzzle is to get the correlation id logged. 
+this is accomplished by making the correlation id a
+link:http://logback.qos.ch/manual/mdc.html[mapped diagnostic context].
+
+In your logback.xml (or logback-test.xml):
+
+
+[source,xml]
+----
+    <appender name="SETUP-MDC" class="io.aviso.logging.CorrelationIdAppender"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} %mdc{correlation-id} %-5level [%thread] %logger{} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="SETUP-MDC"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+----
+
+The CorrelationIdAppended is used to set up the correlation id into the MDC (the mapped
+diagnostic context).
+After that, the `%mdc{correlation-id}` form can extract that value and include it in the
+logged output.
+
+
