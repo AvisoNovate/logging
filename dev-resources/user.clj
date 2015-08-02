@@ -2,8 +2,7 @@
   (:use
     clojure.repl
     io.aviso.exception
-    speclj.config)
-  (:require io.aviso.logging.setup))
+    speclj.config))
 
 (alter-var-root #'default-config assoc :color true :reporters ["documentation"])
 

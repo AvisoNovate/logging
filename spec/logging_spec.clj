@@ -4,7 +4,7 @@
   (:require io.aviso.logging.setup
             [clojure.tools.logging :as l])
   (:import [ch.qos.logback.classic.util ContextSelectorStaticBinder]
-           [ch.qos.logback.core AppenderBase Appender]))
+           [ch.qos.logback.core Appender]))
 
 
 (defn- echo-handler
