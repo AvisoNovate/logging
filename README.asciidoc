@@ -1,4 +1,4 @@
-## Logging - SLF4J plus request correlation
+## Logging - Clojure logging with Logback and SLF4J plus request correlation across servers
 
 image:http://clojars.org/io.aviso/logging/latest-version.svg[Clojars Project, link="http://clojars.org/io.aviso/logging"]
 
