@@ -116,4 +116,23 @@ sub-threads in a way that overlaps with Clojure's inheriting of dynamic vars.
 Because of this, a value stored into the MDC is "sticky" and may leak into
 later logging on the thread, even after exiting the `with-mdc` block.
 
-The best solution for this is to *always* alter the `*extra-mdc*`
+The best solution for this is to *always* set a default for any key
+that may be added inside a `with-mdc` block:
+
+[source,clojure]
+----
+(require '[io.aviso.logging.mdc :refer [set-mdc-default with-mdc]
+         '[clojure.tools.logging :as l])
+
+(set-mdc-default "authenticated" "none")
+
+(with-mdc "authenticated" "https"
+   ...
+   (l/info "Handling request")
+   ... )
+----
+
+Although the "authenticated" key will have value "https"
+in the Logback MDC even after exiting from the `with-mdc` block,
+any subsequent logging will reset it back to the default, "none".
+
