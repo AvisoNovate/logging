@@ -64,7 +64,7 @@ In your logback.xml (or logback-test.xml):
 
 [source,xml]
 ----
-    <appender name="SETUP-MDC" class="io.aviso.logging.CorrelationIdAppender"/>
+    <appender name="SETUP-CORR-ID" class="io.aviso.logging.CorrelationIdAppender"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -73,7 +73,7 @@ In your logback.xml (or logback-test.xml):
     </appender>
 
     <root level="info">
-        <appender-ref ref="SETUP-MDC"/>
+        <appender-ref ref="SETUP-CORR-ID"/>
         <appender-ref ref="STDOUT"/>
     </root>
 ----
@@ -83,4 +83,37 @@ diagnostic context).
 After that, the `%mdc{correlation-id}` form can extract that value and include it in the
 logged output.
 
+## Extra MDC
 
+Version 0.2.0 adds a generalization of request correlation; an arbitrary map of keys and values
+can be added to the MDC.
+
+This takes the form of a new appender class, io.aviso.logging.ExtraMDCAppender:
+
+[source,xml]
+----
+    <appender name="SETUP-MDC" class="io.aviso.logging.ExtraMDCAppender"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} %mdc{authenticated} %-5level [%thread] %logger{} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="SETUP-MDC"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+----
+
+In the above example, authenticated is presumably a value that may be bound into the
+`*extra-mdc*` var.
+
+A macro, `with-mdc`, makes it easy to binding new keys and values into the extra MDC.
+
+Logback's message diagnostic map is mutable and designed to be inherited by
+sub-threads in a way that overlaps with Clojure's inheriting of dynamic vars.
+Because of this, a value stored into the MDC is "sticky" and may leak into
+later logging on the thread, even after exiting the `with-mdc` block.
+
+The best solution for this is to *always* alter the `*extra-mdc*`

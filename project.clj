@@ -1,4 +1,4 @@
-(defproject io.aviso/logging "0.1.0"
+(defproject io.aviso/logging "0.2.0"
   :description "Clojure logging with Logback and SLF4J plus request correlation across servers."
   :url "https://github.com/AvisoNovate/logging"
   :license {:name "Apache Sofware License 2.0"
@@ -9,11 +9,11 @@
   :javac-options ["-target" "1.7" "-source" "1.7"]
 
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.slf4j/slf4j-api "1.7.12"]
+                 [org.slf4j/slf4j-api "1.7.14"]
                  [ch.qos.logback/logback-classic "1.1.3"]
                  [org.clojure/tools.logging "0.3.1"]
-                 [io.aviso/pretty "0.1.18"]
-                 [org.slf4j/jcl-over-slf4j "1.7.12"]]
+                 [io.aviso/pretty "0.1.21"]
+                 [org.slf4j/jcl-over-slf4j "1.7.14"]]
 
   :profiles
   {:dev
@@ -23,20 +23,15 @@
   :java-source-paths ["java-src"]
 
   :plugins [[speclj "3.3.1"]
-            [lein-shell "0.4.0"]]
+            [lein-codox "0.9.0"]]
 
   :test-paths ["spec"]
 
-  :shell {:commands {"scp" {:dir "doc"}}}
-  :aliases {"deploy-doc" ["shell"
-                          "scp" "-r" "." "hlship_howardlewisship@ssh.phx.nearlyfreespeech.net:io.aviso/logging"]
-            "release"    ["do"
-                          "clean,"
-                          "spec,",
-                          "doc,"
-                          "deploy-doc,"
-                          "deploy" "clojars"]}
+  :aliases {"release" ["do"
+                       "clean,"
+                       "spec,",
+                       "codox,"
+                       "deploy" "clojars"]}
 
-  :codox {:defaults                  {:doc/format :markdown}
-          :src-dir-uri               "https://github.com/AvisoNovate/logging/blob/master/"
-          :src-linenum-anchor-prefix "L"})
+  :codox {:metadata   {:doc/format :markdown}
+          :source-uri "https://github.com/AvisoNovate/logging/blob/master/{filepath}#L{line}"})
