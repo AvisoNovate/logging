@@ -2,7 +2,8 @@
 
 image:http://clojars.org/io.aviso/logging/latest-version.svg[Clojars Project, link="http://clojars.org/io.aviso/logging"]
 
-image:https://drone.io/github.com/AvisoNovate/logging/status.png[Build Status, link="https://drone.io/github.com/AvisoNovate/logging"]
+// Note setup yet:
+// image:https://drone.io/github.com/AvisoNovate/logging/status.png[Build Status, link="https://drone.io/github.com/AvisoNovate/logging"]
 
 Logging is available under the terms of the Apache Software License 2.0.
 
