@@ -7,7 +7,7 @@ image:http://clojars.org/io.aviso/logging/latest-version.svg[Clojars Project, li
 
 Logging is available under the terms of the Apache Software License 2.0.
 
-link:http://howardlewisship.com/io.aviso/logging/[API Documentation]
+link:http://avisonovate.github.io/docs/logging/[API Documentation]
 
 ## Dependencies
 
