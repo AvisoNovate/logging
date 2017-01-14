@@ -125,7 +125,7 @@ that may be added inside a `with-mdc` block:
 (require '[io.aviso.logging.mdc :refer [set-mdc-default with-mdc]
          '[clojure.tools.logging :as l])
 
-(set-mdc-default {:authenticated "none")
+(set-mdc-default {:authenticated "none"})
 
 (with-mdc {:authenticated "http"}
    ...
