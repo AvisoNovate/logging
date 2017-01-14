@@ -29,7 +29,7 @@
 
   :aliases {"release" ["do"
                        "clean,"
-                       "javac"
+                       "javac,"
                        "deploy" "clojars"]}
 
   :codox {:metadata   {:doc/format :markdown}
