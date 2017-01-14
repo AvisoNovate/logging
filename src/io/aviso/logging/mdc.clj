@@ -20,16 +20,28 @@
 
 (ExtraMDCAppender/setup #'*extra-mdc*)
 
+(defn to-string-keys
+  [m]
+  (persistent!
+    (reduce-kv (fn [m k v]
+                 (assoc! m (name k) v))
+               (transient {})
+               m)))
+
 (defn set-mdc-default
-  "Alters the root value for the [[*extra-mdc*]] var, setting a key and value.
+  "Alters the root value for the [[*extra-mdc*]] var, merging keys and values.
+
+  Each key is converted to a string using `name`.
+
   The value is usually an empty string.
+
   This ensures that MDC set by [[with-mdc]] doesn't leak out into subsequent
   logging on the same thread."
-  [key value]
-  (alter-var-root #'*extra-mdc* assoc key value))
+  [defaults]
+  (alter-var-root #'*extra-mdc* merge (to-string-keys defaults)))
 
 (defmacro with-mdc
-  "Binds a key/value pair into [[*extra-mdc*]] before evaluating the body."
-  [key value & body]
-  `(binding [*extra-mdc* (assoc *extra-mdc* ~key ~value)]
+  "Binds a map key/value pair into [[*extra-mdc*]] before evaluating the body."
+  [mdc-values & body]
+  `(binding [*extra-mdc* (merge *extra-mdc* (to-string-keys ~mdc-values))]
      ~@body))

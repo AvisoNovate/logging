@@ -9,7 +9,7 @@
   Defaults to the empty string."
   "")
 
-;; This exposes the
+;; This exposes the Clojure var to the Java side, for use in the logging configuration.
 (CorrelationIdAppender/setup #'*correlation-id*)
 
 (defn default-correlation-id-generator

@@ -4,33 +4,32 @@
   :license {:name "Apache Sofware License 2.0"
             :url  "http://www.apache.org/licenses/LICENSE-2.0.html"}
 
-  :jvm-opts ^:replace ["-Xmx1G" "-Xms1G" "-XX:+UseG1GC"]
+  :jvm-opts ^:replace ["-Xmx1G" "-Xms1G" "-XX:+UseG1GC" "-XX:-OmitStackTraceInFastThrow"]
 
   :javac-options ["-target" "1.7" "-source" "1.7"]
 
-  :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.slf4j/slf4j-api "1.7.14"]
-                 [ch.qos.logback/logback-classic "1.1.3"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.slf4j/slf4j-api "1.7.22"]
+                 [ch.qos.logback/logback-classic "1.1.8"]
                  [org.clojure/tools.logging "0.3.1"]
-                 [io.aviso/pretty "0.1.21"]
-                 [org.slf4j/jcl-over-slf4j "1.7.14"]]
+                 [io.aviso/pretty "0.1.33"]
+                 [org.slf4j/jcl-over-slf4j "1.7.22"]]
 
   :profiles
   {:dev
    {:dependencies
-    [[speclj "3.3.1" :exclusions [org.clojure/clojure]]]}}
+    [[speclj "3.3.2" :exclusions [org.clojure/clojure]]]}}
 
   :java-source-paths ["java-src"]
 
-  :plugins [[speclj "3.3.1"]
-            [lein-codox "0.9.0"]]
+  :plugins [[speclj "3.3.2"]
+            [lein-codox "0.10.2"]]
 
   :test-paths ["spec"]
 
   :aliases {"release" ["do"
                        "clean,"
-                       "spec,",
-                       "codox,"
+                       "javac"
                        "deploy" "clojars"]}
 
   :codox {:metadata   {:doc/format :markdown}

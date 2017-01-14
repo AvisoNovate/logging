@@ -48,7 +48,10 @@
   [sym & body]
   `(do
      (let [~sym (atom nil)
-           logger-root# (-> (ContextSelectorStaticBinder/getSingleton) .getContextSelector .getLoggerContext (.getLogger "ROOT"))
+           logger-root# (-> (ContextSelectorStaticBinder/getSingleton)
+                            .getContextSelector
+                            .getLoggerContext
+                            (.getLogger "ROOT"))
            ;; Haven't yet found a way to capture the formatted log output text, but this is pretty
            ;; safe: it's in the MDC ready to formatted.  Also a user can see it in the logs from the output
            capture-appender# (reify Appender
@@ -74,26 +77,26 @@
 (describe "extra MDC"
   (it "can incorporate extra MDC"
       (capturing-mdc mdc
-        (with-mdc "magic" "ring"
+        (with-mdc {:magic "ring"}
                   (l/info "extra mdc logging event")
                   (should= "ring" (get @mdc "magic")))))
 
   (it "ignores nil values"
       (capturing-mdc mdc
-        (with-mdc ["nothing" nil]
+        (with-mdc {:nothing nil}
                   (l/info "nothing logging")
                   (should= false
                            (contains? @mdc "nothing")))))
 
   (it "prevents leakage when defaults are available"
-      (set-mdc-default "leaky" "default")
+      (set-mdc-default {:leaky "default"})
       (capturing-mdc mdc
         (l/info "checking default")
         (should= "default"
                  (get @mdc "leaky")))
 
       (capturing-mdc mdc
-        (with-mdc "leaky" "override"
+        (with-mdc {:leaky "override"}
                   (l/info "inside with-mdc")
                   (should= {"leaky" "override"}
                            *extra-mdc*)

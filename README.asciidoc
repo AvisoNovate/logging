@@ -79,7 +79,7 @@ In your logback.xml (or logback-test.xml):
     </root>
 ----
 
-The CorrelationIdAppended is used to set up the correlation id into the MDC (the mapped
+The CorrelationIdAppender is used to set up the correlation id into the MDC (the mapped
 diagnostic context).
 After that, the `%mdc{correlation-id}` form can extract that value and include it in the
 logged output.
@@ -125,9 +125,9 @@ that may be added inside a `with-mdc` block:
 (require '[io.aviso.logging.mdc :refer [set-mdc-default with-mdc]
          '[clojure.tools.logging :as l])
 
-(set-mdc-default "authenticated" "none")
+(set-mdc-default {:authenticated "none")
 
-(with-mdc "authenticated" "https"
+(with-mdc {:authenticated "http"}
    ...
    (l/info "Handling request")
    ... )
