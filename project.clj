@@ -1,4 +1,4 @@
-(defproject io.aviso/logging "0.2.0"
+(defproject io.aviso/logging "0.2.1"
   :description "Clojure logging with Logback and SLF4J plus request correlation across servers."
   :url "https://github.com/AvisoNovate/logging"
   :license {:name "Apache Sofware License 2.0"
@@ -10,7 +10,7 @@
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.slf4j/slf4j-api "1.7.22"]
-                 [ch.qos.logback/logback-classic "1.1.8"]
+                 [ch.qos.logback/logback-classic "1.2.3"]
                  [org.clojure/tools.logging "0.3.1"]
                  [io.aviso/pretty "0.1.33"]
                  [org.slf4j/jcl-over-slf4j "1.7.22"]]

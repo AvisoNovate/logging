@@ -2,6 +2,9 @@ package io.aviso.logging;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
+
+import org.slf4j.MDC;
+
 import clojure.lang.Var;
 
 /**
@@ -26,6 +29,6 @@ public class CorrelationIdAppender extends AppenderBase<ILoggingEvent> {
 
     @Override
     protected void append(ILoggingEvent eventObject) {
-        eventObject.getMDCPropertyMap().put("correlation-id", getCurrentCorrelationId());
+        MDC.put("correlation-id", getCurrentCorrelationId());
     }
 }
