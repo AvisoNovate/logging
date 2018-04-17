@@ -1,4 +1,4 @@
-## 0.3.0 -- 17 Apr 2018
+## 0.3.1-- 17 Apr 2018
 
 Adding `io.aviso.logging.capture`, which is used to capture logging events during
 testing.

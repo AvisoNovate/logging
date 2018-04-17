@@ -1,4 +1,4 @@
-(defproject io.aviso/logging "0.3.0"
+(defproject io.aviso/logging "0.3.1"
   :description "Clojure logging with Logback and SLF4J plus request correlation across servers."
   :url "https://github.com/AvisoNovate/logging"
   :license {:name "Apache Sofware License 2.0"

@@ -73,7 +73,6 @@
                             {:message message})))
         event->map (fn [^LoggingEvent e]
                      (let [ex (.getThrowableProxy e)]
-                       (prn `capture ex)
                        (cond-> {:logger (-> e .getLoggerName keyword)
                                 :level (-> e .getLevel level->keyword)
                                 :timestamp (.getTimeStamp e)
