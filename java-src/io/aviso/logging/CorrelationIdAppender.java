@@ -2,6 +2,9 @@ package io.aviso.logging;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
+
+import org.slf4j.MDC;
+
 import clojure.lang.Var;
 import org.slf4j.MDC;
 
