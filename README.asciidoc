@@ -1,9 +1,8 @@
 ## Logging - Clojure logging with Logback and SLF4J plus request correlation across servers
 
-image:http://clojars.org/io.aviso/logging/latest-version.svg[Clojars Project, link="http://clojars.org/io.aviso/logging"]
+image:https://img.shields.io/clojars/v/io.aviso/logging.svg[Clojars Project, link="http://clojars.org/io.aviso/logging"]
 
-// Note setup yet:
-// image:https://drone.io/github.com/AvisoNovate/logging/status.png[Build Status, link="https://drone.io/github.com/AvisoNovate/logging"]
+image:https://circleci.com/gh/AvisoNovate/logging/tree/master.svg?style=svg["CircleCI", link="https://circleci.com/gh/AvisoNovate/logging/tree/master"]
 
 Logging is available under the terms of the Apache Software License 2.0.
 
