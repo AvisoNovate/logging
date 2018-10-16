@@ -1,12 +1,21 @@
 (ns logging-spec
   (:use speclj.core
         io.aviso.logging.correlation
-        io.aviso.logging.mdc)
-  (:require io.aviso.logging.setup
-            [clojure.tools.logging :as l])
+        io.aviso.logging.mdc
+        io.aviso.logging.capture)
+  (:require
+    [clojure.tools.logging :as l])
   (:import [ch.qos.logback.classic.util ContextSelectorStaticBinder]
            [ch.qos.logback.core Appender]))
 
+(defmacro capturing
+  "Adapt the fixture (for clojure.test) to this spec test."
+  [& body]
+  `(logged-events-fixture (fn [] ~@body)))
+
+(defn stripped-logged-events
+  []
+  (map #(dissoc % :timestamp :thread-name) (logged-events)))
 
 (defn- echo-handler
   [_request]
@@ -107,5 +116,41 @@
         (l/info "checking default restored")
         (should= "default"
                  (get @mdc "leaky")))))
+
+(describe "capture"
+  ;; Meant to be used with EDN formatted log data, e.g., io.pedestal/pedestal-log
+  (it "captures logged events"
+      (capturing
+        (l/info "{:working :great}")
+        (should= [{:logger :logging-spec
+                   :level :info
+                   :data {:working :great}}]
+                 (stripped-logged-events)))
+      (let [logged (first (logged-events))]
+        (should-not-be-nil (:timestamp logged))
+        (should= (-> (Thread/currentThread) .getName)
+                 (:thread-name logged))))
+  (it "handles unparsable EDN"
+      ;; In practice this is usually due to a #object or other
+      ;; non-value.
+      (capturing (l/info "{ not valid")
+                 (should= {:message "{ not valid"}
+                          (-> (logged-events) first :data))))
+
+  (it "exposes exceptions"
+      (capturing
+        (try
+          (throw (IllegalStateException. "How did this happen?"))
+          (catch Throwable t
+            (l/error (ex-info "Unexpected failure." {} t)
+                     "{:event :failure}")))
+        (should= [{:logger :logging-spec
+                   :level :error
+                   :data {:event :failure}
+                   :ex {:message "Unexpected failure."
+                        :class-name "clojure.lang.ExceptionInfo"
+                        :cause {:message "How did this happen?"
+                                :class-name "java.lang.IllegalStateException"}}}]
+                 (stripped-logged-events)))))
 
 (run-specs)

@@ -6,6 +6,7 @@ import ch.qos.logback.core.AppenderBase;
 import org.slf4j.MDC;
 
 import clojure.lang.Var;
+import org.slf4j.MDC;
 
 /**
  * Responsible for updating the ILoggingEvent with key "correlation-id" based on the

@@ -110,7 +110,7 @@ This takes the form of a new appender class, io.aviso.logging.ExtraMDCAppender:
 In the above example, authenticated is presumably a value that may be bound into the
 `*extra-mdc*` var.
 
-A macro, `with-mdc`, makes it easy to binding new keys and values into the extra MDC.
+A macro, `with-mdc`, makes it easy to bind new keys and values into the extra MDC.
 
 Logback's message diagnostic map is mutable and designed to be inherited by
 sub-threads in a way that overlaps with Clojure's inheriting of dynamic vars.

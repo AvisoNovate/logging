@@ -5,6 +5,7 @@ import ch.qos.logback.core.AppenderBase;
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
 import clojure.lang.Var;
+import org.slf4j.MDC;
 
 import java.util.Map;
 
@@ -35,8 +36,6 @@ public class ExtraMDCAppender extends AppenderBase<ILoggingEvent> {
 
         if (varMap != null && !varMap.isEmpty()) {
 
-            Map<String, String> eventMDC = eventObject.getMDCPropertyMap();
-
             for (Map.Entry<?, ?> entry : varMap.entrySet()) {
                 Object value = entry.getValue();
 
@@ -45,7 +44,7 @@ public class ExtraMDCAppender extends AppenderBase<ILoggingEvent> {
                     // even after the real Appender does its work, and after
                     // the Clojure code exits the logging code and even the
                     // with-mdc block.  See the notes in the namespace.
-                    eventMDC.put((String) nameFn.invoke(entry.getKey()),
+                    MDC.put((String) nameFn.invoke(entry.getKey()),
                             value.toString());
                 }
             }

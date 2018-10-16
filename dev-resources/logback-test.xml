@@ -5,7 +5,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%date{HH:mm:ss.SSS} %mdc{correlation-id} %mdc{magic} %-5level [%thread] %logger{} - %msg%n</pattern>
+            <pattern>%date{HH:mm:ss.SSS} %mdc{correlation-id} %mdc{magic} %-5level [%thread] %logger{} - %msg%n%ex</pattern>
         </encoder>
     </appender>
 
