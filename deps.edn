@@ -1,0 +1,11 @@
+{:mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
+             "clojars" {:url "https://repo.clojars.org/"}}
+
+ :deps {
+        org.clojure/clojure {:mvn/version "1.8.0"}
+        org.slf4j/slf4j-api {:mvn/version "1.7.25"}
+        ch.qos.logback/logback-classic {:mvn/version "1.2.3"}
+        org.clojure/tools.logging {:mvn/version "0.4.0"}
+        io.aviso/pretty {:mvn/version "0.1.34"}
+        org.slf4j/jcl-over-slf4j {:mvn/version "1.7.25"}}
+ }
