@@ -5,8 +5,8 @@
 
  :deps {
         org.clojure/clojure {:mvn/version "1.8.0"}
-        org.slf4j/slf4j-api {:mvn/version "1.7.25"}
+        org.slf4j/slf4j-api {:mvn/version "1.7.30"}
         ch.qos.logback/logback-classic {:mvn/version "1.2.3"}
-        org.clojure/tools.logging {:mvn/version "0.4.0"}
-        io.aviso/pretty {:mvn/version "0.1.37"}
-        org.slf4j/jcl-over-slf4j {:mvn/version "1.7.25"}} }
+        org.clojure/tools.logging {:mvn/version "1.1.0"}
+        io.aviso/pretty {:mvn/version "1.1"}
+        org.slf4j/jcl-over-slf4j {:mvn/version "1.7.30"}} }

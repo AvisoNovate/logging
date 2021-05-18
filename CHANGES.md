@@ -1,3 +1,7 @@
+## 1.0 - 18 May 2021
+
+Update dependencies.
+
 ## 0.3.2 - 19 Apr 2019
 
 Add compatibility with Clojure 1.10.0.
